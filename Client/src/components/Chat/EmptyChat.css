@@ -1,0 +1,35 @@
+
+.emptychat{
+    display: flex;
+    flex-direction: column;
+    flex: 0.7;
+    background: #f8f9fa;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.emptychat-container{
+    width: 400px;
+    text-align: center;
+}
+.emptychat-container > img{
+    width: 100%;
+}
+.emptychat-title{
+    font-size: 32px;
+    font-family: inherit;
+    font-weight: 300;
+    color: #41525d;
+    width: 100%;
+    margin: 10px 0px;
+
+
+}
+.emptychat-subtitle{
+    font-size: 14px;
+    color: #667781;
+    font-weight: 400;
+    font-family: inherit;
+    width: 100%;
+    margin: 5px 0px;
+}

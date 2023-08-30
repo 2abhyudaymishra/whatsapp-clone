@@ -1,0 +1,27 @@
+*{
+  margin: 0;
+  padding: 0;
+}
+.whatsapp{
+  display: grid;
+  place-items: center;
+  height: 100vh;
+    background:linear-gradient(to bottom, #00A884 20%,#dadbd3 20%, #dadbd3 75%); 
+}
+.whatsapp-body{
+  display: flex;
+  background-color: #ededed;
+  height: 95vh;
+  width: 95vw;
+  box-shadow: -1px 4px 20px -6px rgb(0,0,0,0.75);  
+}
+::-webkit-scrollbar {
+  width: 6px!important;
+  height: 6px!important;
+}
+::-webkit-scrollbar-thumb {
+  background-color: rgba(0,0,0,.2);
+}
+::-webkit-scrollbar-track {
+  background: hsla(0,0%,100%,.1);
+}
