@@ -12,7 +12,8 @@ import { useRef } from "react";
 import { AccountContext } from "../../context/AccountContext";
 import Message from "../Message/Message";
 import { getmessage, newmessage } from "../../services/api";
-
+import data from '@emoji-mart/data'
+import Picker from '@emoji-mart/react'
 function Chat({ person }) {
 	const usermessage = useRef();
 	const { loginDetails, selectedConversation, socket } =
@@ -64,9 +65,9 @@ function Chat({ person }) {
 				setcurrentchat((prevMessages) => [...prevMessages, message]);
 			}
 		};
-	
+
 		socket.current.on("getMessage", messageHandler);
-	
+
 		return () => {
 			socket.current.off("getMessage", messageHandler);
 		};
@@ -78,6 +79,19 @@ function Chat({ person }) {
 			scrollchat.current.scrollTop = scrollchat.current.scrollHeight;
 		}
 	}, [currentchat]);
+
+
+	const toggleEmojiSlider = () => {
+		 document.getElementById("emojislider")?.classList.toggle("hidden");
+	};
+
+	const addemoji =(e)=>{
+		const value = usermessage.current.value;
+		usermessage.current.value=value+e.native;
+		document.getElementById("usermessage").focus();
+	}
+
+
 	return (
 		<div className="chat">
 			<div className="chat-header">
@@ -116,16 +130,20 @@ function Chat({ person }) {
 			</div>
 
 			<div className="chat-footer">
-				<InsertEmoticon />
+				<InsertEmoticon onClick={toggleEmojiSlider} />
+				<div className="chat-emoji-slider hidden" id="emojislider">
+					<Picker data={data} onEmojiSelect={addemoji} theme="light" />
+				</div>
 				<label htmlFor="inputfile">
 					<AttachFile />
 				</label>
-				<input type="file" id="inputfile" style={{ display: "none" }} />
+				<input type="file" id="inputfile" className="hidden" />
 				<form onSubmit={(e) => handleSendMessage(e)}>
 					<input
 						type="text"
 						placeholder="Type message.... "
 						ref={usermessage}
+						id="usermessage"
 					/>
 					<button type="submit"> send message</button>
 				</form>
