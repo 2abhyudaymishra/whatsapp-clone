@@ -13,6 +13,7 @@
   background-color: #ededed;
   height: 95vh;
   width: 95vw;
+  position: relative;
   box-shadow: -1px 4px 20px -6px rgb(0,0,0,0.75);  
 }
 ::-webkit-scrollbar {

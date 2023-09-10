@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
 import "./Sidebar.css";
-import DonutLargeIcon from "@mui/icons-material/DonutLarge";
 import ChatIcon from "@mui/icons-material/Chat";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
@@ -8,7 +7,7 @@ import { Avatar, IconButton } from "@mui/material";
 import SidebarChat from "./SidebarChat";
 import { AccountContext } from "../../context/AccountContext";
 import { getusers } from "../../services/api";
-function Sidebar() {
+function Sidebar({setShowBroadcast,ShowBroadcast}) {
 	const account = useContext(AccountContext);
 	const { loginDetails } = account;
 	const [users, setusers] = useState([]);
@@ -24,13 +23,15 @@ function Sidebar() {
 	return (
 		<div className="sidebar">
 			<div className="sidebar-header">
-				<Avatar src={`${loginDetails?.picture}`} />
+				<div className="sidebar-header-left">
+					<Avatar src={`${loginDetails?.picture}`} />
+					<span>
+					{loginDetails.name}
+					</span>
+				</div>
 				<div className="sidebar-header-right">
 					<IconButton>
-						<DonutLargeIcon />
-					</IconButton>
-					<IconButton>
-						<ChatIcon />
+						<ChatIcon onClick={()=>setShowBroadcast(true)}/>
 					</IconButton>
 					<IconButton>
 						<MoreVertIcon />
@@ -52,7 +53,7 @@ function Sidebar() {
 				{   // eslint-disable-next-line
 					users?.map((e, i) => {
 					if (e.sub !== loginDetails.sub) {
-						return <SidebarChat userdetails={e} key={i} />;
+						return <SidebarChat userdetails={e} key={i} ShowBroadcast={ShowBroadcast}/>;
 					}
 				})}
 			</div>

@@ -40,3 +40,11 @@ export const getmessage = async (id) => {
 		console.log(error);
 	}
 };
+export const broadcastAmessage = async (data) => {
+	try {
+		let response = await axios.post(url + "message/broadcast",data);
+		return response.data;
+	} catch (error) {
+		console.log(error);
+	}
+};

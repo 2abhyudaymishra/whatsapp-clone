@@ -6,6 +6,7 @@ const AccountState = ({ children }) => {
 	const [loginDetails, setLoginDetails] = useState(null);
 	const [showPerson, setShowperson] = useState(null);
 	const [selectedConversation, setselectedConversation] = useState(null);
+	const [updatesidebar,setupdatesidebar]= useState(false);
 	
 	const socket = useRef();
 
@@ -22,6 +23,7 @@ const AccountState = ({ children }) => {
 				selectedConversation,
 				setselectedConversation,
 				socket,
+				updatesidebar,setupdatesidebar
 			}}>
 			{children}
 		</AccountContext.Provider>

@@ -1,0 +1,15 @@
+.emojibutton{
+	position: relative;
+}
+.chat-emoji-slider{
+    position: absolute;
+    left: 0;
+    top: -440px;
+    z-index: 5;
+	transition: ease-out 0.5s;
+}
+.emojibutton > .MuiSvgIcon-root {
+	padding: 10px;
+	color: gray;
+	cursor: pointer;
+}

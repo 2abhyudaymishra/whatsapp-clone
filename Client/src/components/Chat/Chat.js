@@ -4,7 +4,6 @@ import { Avatar, IconButton } from "@mui/material";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import {
 	AttachFile,
-	InsertEmoticon,
 	Mic,
 	SearchOutlined,
 } from "@mui/icons-material";
@@ -12,11 +11,12 @@ import { useRef } from "react";
 import { AccountContext } from "../../context/AccountContext";
 import Message from "../Message/Message";
 import { getmessage, newmessage } from "../../services/api";
-import data from '@emoji-mart/data'
-import Picker from '@emoji-mart/react'
+import Emoji from "./Emoji";
+
+
 function Chat({ person }) {
 	const usermessage = useRef();
-	const { loginDetails, selectedConversation, socket } =
+	const { loginDetails, selectedConversation, socket,setupdatesidebar } =
 		useContext(AccountContext);
 	const [currentchat, setcurrentchat] = useState([]);
 	const [activeuser, setactiveuser] = useState(null);
@@ -37,6 +37,7 @@ function Chat({ person }) {
 		let chat1 = [...currentchat];
 		chat1.push(newchat);
 		setcurrentchat(chat1);
+		setupdatesidebar(true);
 	};
 
 	useEffect(() => {
@@ -79,19 +80,6 @@ function Chat({ person }) {
 			scrollchat.current.scrollTop = scrollchat.current.scrollHeight;
 		}
 	}, [currentchat]);
-
-
-	const toggleEmojiSlider = () => {
-		 document.getElementById("emojislider")?.classList.toggle("hidden");
-	};
-
-	const addemoji =(e)=>{
-		const value = usermessage.current.value;
-		usermessage.current.value=value+e.native;
-		document.getElementById("usermessage").focus();
-	}
-
-
 	return (
 		<div className="chat">
 			<div className="chat-header">
@@ -130,10 +118,7 @@ function Chat({ person }) {
 			</div>
 
 			<div className="chat-footer">
-				<InsertEmoticon onClick={toggleEmojiSlider} />
-				<div className="chat-emoji-slider hidden" id="emojislider">
-					<Picker data={data} onEmojiSelect={addemoji} theme="light" />
-				</div>
+					<Emoji usermessage={usermessage} />
 				<label htmlFor="inputfile">
 					<AttachFile />
 				</label>

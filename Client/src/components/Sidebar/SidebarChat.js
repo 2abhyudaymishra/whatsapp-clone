@@ -4,10 +4,10 @@ import { Avatar } from "@mui/material";
 import { AccountContext } from "../../context/AccountContext";
 import { setConversation } from "../../services/api";
 
-function SidebarChat({ userdetails }) {
+function SidebarChat({ userdetails ,ShowBroadcast}) {
 
 	const { picture, name, sub } = userdetails;
-	const { setShowperson, loginDetails, setselectedConversation,selectedConversation } =useContext(AccountContext);
+	const { setShowperson, loginDetails, setselectedConversation,selectedConversation ,updatesidebar,setupdatesidebar} =useContext(AccountContext);
 	const [con, setcon] = useState({});
 	const showuser = async () => {
 		setShowperson(userdetails);
@@ -28,7 +28,8 @@ function SidebarChat({ userdetails }) {
 		   setcon(data.details);
 		}
 		conversation();
-	}, [selectedConversation]);
+		setupdatesidebar(false);
+	}, [updatesidebar,ShowBroadcast]);
 	
 	return (
 		<div className="sidebar-chat" onClick={() => showuser()}>
