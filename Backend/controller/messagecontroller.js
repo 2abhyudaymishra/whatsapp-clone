@@ -3,9 +3,17 @@ const Conversation = require("../model/Conversation");
 const newmesssage = async (req, res) => {
 	try {
 		const newmessage = await Message.create(req.body);
-		await Conversation.findByIdAndUpdate(req.body.conversationid, {
-			message: req.body.message,
-		});
+		if(newmessage.type === "text"){
+			await Conversation.findByIdAndUpdate(req.body.conversationid, {
+				message: req.body.message,
+			});
+		}
+		else{
+			await Conversation.findByIdAndUpdate(req.body.conversationid, {
+				message: req.body.message.substr(46),
+			});
+
+		}
 		res.status(200).send(newmessage);
 	} catch (error) {
 		return res.status(500).send({ msg: error });
@@ -47,8 +55,10 @@ const broadcastmesssage = async (req, res) => {
 	}
 };
 
+
 module.exports = {
 	newmesssage,
 	getmesssage,
 	broadcastmesssage,
+
 };

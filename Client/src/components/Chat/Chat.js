@@ -10,7 +10,7 @@ import {
 import { useRef } from "react";
 import { AccountContext } from "../../context/AccountContext";
 import Message from "../Message/Message";
-import { getmessage, newmessage } from "../../services/api";
+import { getmessage, newmessage, uploadFile } from "../../services/api";
 import Emoji from "./Emoji";
 
 
@@ -20,7 +20,9 @@ function Chat({ person }) {
 		useContext(AccountContext);
 	const [currentchat, setcurrentchat] = useState([]);
 	const [activeuser, setactiveuser] = useState(null);
+
 	const scrollchat = useRef();
+
 	const handleSendMessage = async (e) => {
 		e.preventDefault();
 		const chatdetails = {
@@ -39,6 +41,32 @@ function Chat({ person }) {
 		setcurrentchat(chat1);
 		setupdatesidebar(true);
 	};
+
+	const fileSendHandler = async(e)=>{
+		const file = e.target.files[0];
+		usermessage.current.value = file.name;
+		if(file){
+			const data = new FormData();
+			data.append("name",file.name);
+			data.append("file",file);
+			let response = await uploadFile(data);
+
+			const chatdetails = {
+				message: response.imageurl,
+				receiverid: person.sub,
+				senderid: loginDetails.sub,
+				type: "file",
+				conversationid: selectedConversation._id,
+			};
+			console.log(chatdetails);
+			let newchat = await newmessage(chatdetails);
+			socket.current.emit("sendMessage", newchat);
+			let chat1 = [...currentchat];
+			chat1.push(newchat);
+			setcurrentchat(chat1);
+			setupdatesidebar(true);
+		}
+	}
 
 	useEffect(() => {
 		const getmessagedetails = async () => {
@@ -80,6 +108,8 @@ function Chat({ person }) {
 			scrollchat.current.scrollTop = scrollchat.current.scrollHeight;
 		}
 	}, [currentchat]);
+
+	
 	return (
 		<div className="chat">
 			<div className="chat-header">
@@ -122,7 +152,7 @@ function Chat({ person }) {
 				<label htmlFor="inputfile">
 					<AttachFile />
 				</label>
-				<input type="file" id="inputfile" className="hidden" />
+				<input type="file" id="inputfile" className="hidden" onChange={fileSendHandler}/>
 				<form onSubmit={(e) => handleSendMessage(e)}>
 					<input
 						type="text"

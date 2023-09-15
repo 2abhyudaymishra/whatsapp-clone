@@ -3,9 +3,14 @@
     padding: 20px;
     cursor: pointer;
     border: 1px solid #f6f6f6;
+    width: 92%;
 }
 .sidebar-chat:hover{
     background-color: #ebebeb;
+}
+.sidebar-chat-info{
+    margin-left: 15px;
+    width: 80%;
 }
 .sidebar-chat-info > h2{
     font-size: 16px;
@@ -14,7 +19,8 @@
 }
 .sidebar-chat-info > p{
     color: gray;
-}
-.sidebar-chat-info{
-    margin-left: 15px;
+    max-width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }

@@ -48,3 +48,11 @@ export const broadcastAmessage = async (data) => {
 		console.log(error);
 	}
 };
+export const uploadFile = async(data)=>{
+	try {
+		let response = await axios.post(url + "file/upload",data);
+		return response.data;
+	} catch (error) {
+		console.log(error);
+	}
+}

@@ -7,9 +7,11 @@ import jwt_decode from "jwt-decode";
 import "./Login.css";
 import { adduser } from "../../services/api";
 import { AccountContext } from "../../context/AccountContext";
+import { io } from "socket.io-client";
+
 function Login() {
 	const account = useContext(AccountContext);
-	const {setLoginDetails} = account;
+	const {setLoginDetails,socket} = account;
 	const id = process.env.REACT_APP_CLIENTID;
 	return (
 		
@@ -57,6 +59,8 @@ function Login() {
 									);
 									setLoginDetails(decoded);
 									await adduser(decoded);
+									socket.current = io("ws://localhost:9000");
+
 								}}
 								onError={() => {
 									console.log("Login Failed");
