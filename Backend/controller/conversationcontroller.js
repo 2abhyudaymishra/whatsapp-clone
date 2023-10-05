@@ -17,8 +17,25 @@ const newconversation =async (req, res) => {
 		
 	}
 };
+const broadcastconversations = async (req, res) => {
+	try {
+		const { receivers, sender } = req.body;
+		let conversationIds = []
+		for (user of receivers) {
+			const Conversationdetails = await Conversation.findOne({
+				members: { $all: [user, sender] },
+			});
 
+			const id = Conversationdetails._id.toString();
+			conversationIds.push(id);
+		}
+		res.status(200).send({ success: true,conversationIds });
+	} catch (error) {
+		return res.status(500).send({ msg: error });
+	}
+};
 
 module.exports = {
-    newconversation
+    newconversation,
+    broadcastconversations
 };

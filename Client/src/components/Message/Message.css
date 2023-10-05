@@ -19,18 +19,48 @@
 	margin-left: auto;
 	background-color: #dcf8c6;
 }
-.chat-message  > a {
+.chat-message-details{
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    max-width: 95%;
+}
+.chat-message-details  > a {
 	display: flex;
     align-items: center;
     gap: 10px;
 	text-decoration: none;
 }
-
-.chat-message  > a > .MuiSvgIcon-root{
-	font-size: 40px;
+.chat-message-details  > a > img{
+    height: 40px;
 }
 
+.chat-reply-message{
+    backdrop-filter: contrast(0.8);
+    padding: 5px;
+    border-radius: 4px;
+    word-wrap: break-word;
+}
 .message-text{
 	word-wrap: break-word;
-	max-width: 95%;
+}
+
+.chattime-and-reply{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    gap: 3px;
+
+}
+.chat-reply-button > button {
+    margin-left: 6px;
+    height: 12px;
+    width: 12px;
+}
+.chat-reply-button > button > svg {
+    font-size: 70%;
+}
+.darkenmessage{
+    filter: invert(1);
 }

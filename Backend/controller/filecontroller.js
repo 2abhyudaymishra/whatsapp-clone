@@ -5,10 +5,14 @@ const uploadfile = async (req, res) => {
 		if (!req.file) {
 			res.status(404).send({ success: false });
 		}
+		const filedetails= {
+			url : `${url}/file/${req.file.filename}`,
+			mime : req.file.mimetype,
+			size : req.file.size,
+			name:req.file.originalname,
+		}
 
-		const imageurl = `${url}/file/${req.file.filename}`;
-
-		res.status(200).send({ success: true, imageurl });
+		res.status(200).send({ success: true, filedetails });
 	} catch (error) {
 		return res.status(500).send({ msg: error });
 	}

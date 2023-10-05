@@ -5,12 +5,14 @@ import { Avatar, IconButton } from "@mui/material";
 import Emoji from "../Chat/Emoji";
 import { useRef } from "react";
 import { AccountContext } from "../../context/AccountContext";
-import { broadcastAmessage, getusers } from "../../services/api";
+import { broadcastAmessage, getusers, newmessage } from "../../services/api";
+import { Socket } from "socket.io-client";
 export default function Broadcast({setShowBroadcast,busers}) {
 	const broadcastmessage = useRef();
-	const account = useContext(AccountContext);
-	const { loginDetails } = account;
+	const { loginDetails,socket,currentchat,setcurrentchat,selectedConversation,setupdatesidebar } =  useContext(AccountContext);
 	const [userlist, setuserslist] = useState([]);
+
+	const slider = useRef();
 
 	const handlebroadcastuser = (value) => {
 		const exist = userlist.find((e) => e === value);
@@ -29,12 +31,30 @@ export default function Broadcast({setShowBroadcast,busers}) {
       alert("Please select atleast one user");
     }
     else{
+
       const broadcastinfo = {
-        receivers:userlist,message:broadcastmessage.current?.value,sender:loginDetails.sub
+        receivers:userlist,sender:loginDetails.sub
       }
       const data = await broadcastAmessage(broadcastinfo);
 	  if(data.success){
-		  setShowBroadcast(false);
+		  const conversationids = data.conversationIds;
+		  for(let i=0 ;i<userlist.length; i++){
+			const messagedetails = {
+				senderid:loginDetails.sub,
+				receiverid : userlist[i],
+				message : broadcastmessage.current.value,
+				conversationid : conversationids[i],
+			}
+			let newchat = await newmessage(messagedetails);
+			socket.current.emit("sendMessage", newchat);
+			if(conversationids[i] == selectedConversation?._id){
+				let chat1 = [...currentchat];
+				chat1.push(newchat);
+				setcurrentchat(chat1);
+			}
+		}
+		setupdatesidebar(true);
+		setShowBroadcast(false);
 		}
 		else{
 			alert("An error occured while broadcasting messaging");
@@ -47,8 +67,8 @@ export default function Broadcast({setShowBroadcast,busers}) {
 			<div className="broadcast">
 				<div className="broadcast-header">
 					<h2>Broadcast your message</h2>
-					<IconButton>
-						<ClearIcon onClick={()=>setShowBroadcast(false)}/>
+					<IconButton onClick={()=>setShowBroadcast(false)}>
+						<ClearIcon />
 					</IconButton>
 				</div>
 
@@ -78,7 +98,7 @@ export default function Broadcast({setShowBroadcast,busers}) {
 					</div>
 
 					<div className="broadcast-footer-messageInput">
-						<Emoji usermessage={broadcastmessage} />
+						<Emoji usermessage={broadcastmessage} emojislider={slider}/>
 						<form onSubmit={(e) => sendbmessage(e)}>
 							<input
 								type="text"

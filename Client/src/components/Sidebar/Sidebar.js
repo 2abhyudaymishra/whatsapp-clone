@@ -30,8 +30,8 @@ function Sidebar({setShowBroadcast,ShowBroadcast}) {
 					</span>
 				</div>
 				<div className="sidebar-header-right">
-					<IconButton>
-						<ChatIcon onClick={()=>setShowBroadcast(true)}/>
+					<IconButton onClick={()=>setShowBroadcast(true)}>
+						<ChatIcon />
 					</IconButton>
 					<IconButton>
 						<MoreVertIcon />

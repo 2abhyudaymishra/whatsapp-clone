@@ -3,10 +3,11 @@ export const AccountContext = createContext(null);
 
 const AccountState = ({ children }) => {
 	const [loginDetails, setLoginDetails] = useState(null);
-	const [showPerson, setShowperson] = useState(null);
+	const [SelectedPerson, setSelectedPerson] = useState(null);
 	const [selectedConversation, setselectedConversation] = useState(null);
-	const [updatesidebar,setupdatesidebar]= useState(false);
-	
+	const [updatesidebar, setupdatesidebar] = useState(false);
+	const [currentchat, setcurrentchat] = useState([]);
+
 	const socket = useRef();
 
 	return (
@@ -14,12 +15,15 @@ const AccountState = ({ children }) => {
 			value={{
 				loginDetails,
 				setLoginDetails,
-				showPerson,
-				setShowperson,
+				SelectedPerson,
+				setSelectedPerson,
 				selectedConversation,
 				setselectedConversation,
 				socket,
-				updatesidebar,setupdatesidebar
+				updatesidebar,
+				setupdatesidebar,
+				currentchat,
+				setcurrentchat,
 			}}>
 			{children}
 		</AccountContext.Provider>

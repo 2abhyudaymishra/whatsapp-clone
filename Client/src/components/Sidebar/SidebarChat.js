@@ -7,10 +7,11 @@ import { setConversation } from "../../services/api";
 function SidebarChat({ userdetails ,ShowBroadcast}) {
 
 	const { picture, name, sub } = userdetails;
-	const { setShowperson, loginDetails, setselectedConversation,selectedConversation ,updatesidebar,setupdatesidebar} =useContext(AccountContext);
+	const { setSelectedPerson, loginDetails, setselectedConversation ,updatesidebar,setupdatesidebar} =useContext(AccountContext);
 	const [con, setcon] = useState({});
+	
 	const showuser = async () => {
-		setShowperson(userdetails);
+		setSelectedPerson(userdetails);
 		let conversation = await setConversation({
 			senderid: loginDetails.sub,
 			receiverid: sub,
@@ -18,6 +19,8 @@ function SidebarChat({ userdetails ,ShowBroadcast}) {
 		setselectedConversation(conversation.details);
 	};
 
+
+	//to update current sent message
 	useEffect(  () => {
 		 
 		const conversation = async ()=>{
@@ -29,6 +32,7 @@ function SidebarChat({ userdetails ,ShowBroadcast}) {
 		}
 		conversation();
 		setupdatesidebar(false);
+		console.log(updatesidebar);
 	}, [updatesidebar,ShowBroadcast]);
 	
 	return (

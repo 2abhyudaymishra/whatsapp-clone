@@ -42,7 +42,7 @@ export const getmessage = async (id) => {
 };
 export const broadcastAmessage = async (data) => {
 	try {
-		let response = await axios.post(url + "message/broadcast",data);
+		let response = await axios.post(url + "conversation/broadcast",data);
 		return response.data;
 	} catch (error) {
 		console.log(error);

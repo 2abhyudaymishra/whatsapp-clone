@@ -9,10 +9,10 @@ const upload = require("../utils/upload");
 router.post("/adduser", userController.adduser);
 router.get("/getuser", userController.getusers);
 router.post("/conversation/add", conversationController.newconversation);
+router.post("/conversation/broadcast", conversationController.broadcastconversations);
 
 router.post("/message/add", messageController.newmesssage);
 router.get("/message/get/:id", messageController.getmesssage);
-router.post("/message/broadcast", messageController.broadcastmesssage);
 
 router.post("/file/upload", upload.single("file"),fileController.uploadfile);
 router.get("/file/:filename",fileController.getfile);

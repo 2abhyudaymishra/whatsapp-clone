@@ -17,7 +17,7 @@ const getUser = (userId) => {
 	return users.find((user) => user.sub === userId);
 };
 const removeUser = (socketId) => {
-	users = users.filter((user) => user.socketId !== socketId);
+	users = users.filter((user) => user.socketid !== socketId);
 };
 
 io.on("connection", (socket) => {
@@ -37,6 +37,6 @@ io.on("connection", (socket) => {
 	socket.on("disconnect", () => {
 		console.log("user disconnected");
 		removeUser(socket.id);
-		io.emit("getusers", users);
+		io.emit("getuser", users);
 	});
 });

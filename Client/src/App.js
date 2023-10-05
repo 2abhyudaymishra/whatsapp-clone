@@ -8,8 +8,8 @@ import EmptyChat from "./components/Chat/EmptyChat";
 import Broadcast from "./components/Broadcast/Broadcast";
 import { getusers } from "./services/api";
 function App() {
-	const {loginDetails,showPerson} =useContext(AccountContext);
-	const [ShowBroadcast,setShowBroadcast]=useState(false);
+	const { loginDetails, SelectedPerson } = useContext(AccountContext);
+	const [ShowBroadcast, setShowBroadcast] = useState(false);
 	const [busers, setbusers] = useState([]);
 	useEffect(() => {
 		const fetchuser = async () => {
@@ -26,11 +26,23 @@ function App() {
 			) : (
 				<div className="whatsapp">
 					<div className="whatsapp-body">
-						{ShowBroadcast?<Broadcast setShowBroadcast={setShowBroadcast} busers={busers}/>:""}
-						<Sidebar setShowBroadcast={setShowBroadcast}  ShowBroadcast={ShowBroadcast}/>
-						{
-							showPerson?<Chat person={showPerson}/>:<EmptyChat/>
-						}
+						{ShowBroadcast ? (
+							<Broadcast
+								setShowBroadcast={setShowBroadcast}
+								busers={busers}
+							/>
+						) : (
+							""
+						)}
+						<Sidebar
+							setShowBroadcast={setShowBroadcast}
+							ShowBroadcast={ShowBroadcast}
+						/>
+						{SelectedPerson ? (
+							<Chat person={SelectedPerson} />
+						) : (
+							<EmptyChat />
+						)}
 					</div>
 				</div>
 			)}
